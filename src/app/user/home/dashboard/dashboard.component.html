@@ -1,8 +1,9 @@
-<!-- <div class="row">
+<div class="row">
   <div class="col-xs-4">
     <div class="ct-chart "></div>
   </div>
-</div> -->
+</div>
+
 
 <div class="row" *ngFor="let Rowitem of _DashBoardInfo">
   <div *ngFor="let item of Rowitem" class="col-lg-{{item.btstrp_size}}">
@@ -43,64 +44,16 @@
 
         </h6>
         <div id="chartTotalEarnings">
-          <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-line" style="width: 100%; height: 100%;">
-
-            <g>
-              <g class="ct-series ct-series-a">
-                <path d="M50,67.667C56.125,62,62.25,58.222,68.375,50.667C74.5,43.111,80.625,16.667,86.75,16.667C92.875,16.667,99,86.779,105.125,87C111.25,87.221,117.375,87.333,123.5,87.333C129.625,87.333,135.75,87.333,141.875,87.333C148,87.333,154.125,79.111,160.25,75"
-                  class="ct-line"></path>
-                <line x1="50" y1="67.66666666666666" x2="50.01" y2="67.66666666666666" class="ct-point" ct:value="142"></line>
-                <line x1="68.375" y1="50.66666666666667" x2="68.385" y2="50.66666666666667" class="ct-point" ct:value="193"></line>
-                <line x1="86.75" y1="16.66666666666667" x2="86.76" y2="16.66666666666667" class="ct-point" ct:value="295"></line>
-                <line x1="105.125" y1="87" x2="105.135" y2="87" class="ct-point" ct:value="84"></line>
-                <line x1="123.5" y1="87.33333333333333" x2="123.51" y2="87.33333333333333" class="ct-point" ct:value="83"></line>
-                <line x1="141.875" y1="87.33333333333333" x2="141.885" y2="87.33333333333333" class="ct-point" ct:value="83"></line>
-                <line x1="160.25" y1="75" x2="160.26" y2="75" class="ct-point" ct:value="120"></line>
-              </g>
-            </g>
-            <g class="ct-labels">
-              <foreignObject style="overflow: visible;" x="50" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Sunday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="68.375" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Monday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="86.75" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Tuesday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="105.125" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Wendsday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="123.5" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Thursday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="141.875" y="120" width="18.375" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 18px; height: 20px;">Friday</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="160.25" y="120" width="30" height="20">
-                <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 30px; height: 20px;">Saturady</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="81.66666666666666" x="10" height="33.333333333333336" width="30">
-                <span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 33px; width: 30px;">0</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="48.33333333333332" x="10" height="33.333333333333336" width="30">
-                <span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 33px; width: 30px;">100</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="15" x="10" height="33.33333333333333" width="30">
-                <span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 33px; width: 30px;">200</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="-15" x="10" height="30" width="30">
-                <span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 30px; width: 30px;">300</span>
-              </foreignObject>
-            </g>
-          </svg>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="{{item.rubric_name}}"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="card-footer">
-        <hr>
+      <div class="card-footer">        <hr>
         <div class="footer-title">This is where the description belongs</div>
         <div class="pull-right">
-
         </div>
       </div>
     </div>
@@ -154,9 +107,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of this._PageData['time_of_day_anylsis'][item.rubric_name]">
-              <td>1</td>
-              <td>{{item}}</td>
+            <tr ng-repeat="(key,value) in this._PageData['time_of_day_anylsis'][item.rubric_name]">
+              <td>{{value}}</td>
             </tr>
           </tbody>
         </table>
@@ -180,62 +132,13 @@
 
         </h6>
         <div id="chartTotalEarnings">
-          <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="210px" class="ct-chart-line" style="width: 100%;height: 210px;">
-            <g class="ct-grids"></g>
-            <g>
-              <g class="ct-series ct-series-a">
-                <path d="M0,0C58.461,125.333,83.844,112.667,100.767,107
-                                C117.689,101.333,134.611,93.667,151.533,95" class="ct-line ct-green" style="stroke: #f5593d;"></path>
-              </g>
-            </g>
-            <g class="ct-labels">
-              <foreignObject style="overflow: visible;" x="50" y="180" width="50.76666768391927" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">Jan</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="100.76666768391928" y="180" width="50.76666768391927" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">Feb</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="151.53333536783856" y="180" width="50.766667683919266" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">Mar</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="202.3000030517578" y="180" width="50.76666768391928" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">April</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="253.0666707356771" y="180" width="50.76666768391928" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">May</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" x="303.8333384195964" y="180" width="50.76666768391925" height="20">
-                <span class="ct-label ct-horizontal ct-end" style="width: 51px; height: 20px" xmlns="http://www.w3.org/2000/xmlns/">June</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="155" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">0</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="135" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">100</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="115" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">200</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="95" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">300</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="75" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">400</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="55" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">500</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="35" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">600</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="15" x="10" height="20" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 20px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">700</span>
-              </foreignObject>
-              <foreignObject style="overflow: visible;" y="-15" x="10" height="30" width="30">
-                <span class="ct-label ct-vertical ct-start" style="height: 30px; width: 30px" xmlns="http://www.w3.org/2000/xmlns/">800</span>
-              </foreignObject>
-            </g>
-          </svg>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="{{item.rubric_name}}"></div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="card-footer">

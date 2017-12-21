@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   _DashBoardArray: Array<DashBoardInfo>
   _DashBoardInfo = [];
   _PageData: string[] = []//dynamic model array
+  _Page: string[] = []//dynamic model array
   constructor(public _UserService: UserService, private _DataFileService: DataFileService, private route: ActivatedRoute, private _DashboardService: DashboardService) {
     this._UserService.CurrentRoutingPage("DashBoard");
     this._DashBoardArray = new Array<DashBoardInfo>();
@@ -56,6 +57,14 @@ export class DashboardComponent implements OnInit {
     //     83,
     //     83,
     //     120
+    //   ],[
+    //     12,
+    //     193,
+    //     25,
+    //     84,
+    //     3,
+    //     83,
+    //     120
     //   ]
     //   ]
     // }, {
@@ -69,13 +78,13 @@ export class DashboardComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id > 0) {
-        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data });
+        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data; });
       } else {
-        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + sessionStorage.getItem('CompititorPageId') + '/?tab=dashboard').subscribe(data => { this._PageData = data; console.log(this._PageData) });
+        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + sessionStorage.getItem('CompititorPageId') + '/?tab=dashboard').subscribe(data => { this._PageData = data; });
       }
     });
     this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=dashboard').subscribe(data => {
-      
+      this._Page = data;
       data.forEach(element => {
         this._DashBoardArray.push(element)
         row = row + element.btstrp_size
@@ -85,16 +94,53 @@ export class DashboardComponent implements OnInit {
           row = 0;
         }
       });
-      $.getScript('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
+
     });
+
     setTimeout(() => {
-      this.AfterViewInit();
-    }, 2000);
+      Object.entries(this._PageData).forEach(([key, value]) => {
+        Object.entries(this._Page).forEach(([k, Pg]) => {
+
+          if (Pg['representation'] == 'line'|| Pg['representation'] == 'bar') {
+            Object.entries(value).forEach(([key, value]) => {
+              if (Pg['rubric_name'] == key) {
+                var Strvalue = [];
+                Object.entries(value).forEach(([key, value]) => {
+                  if (key !== 'labels') {
+                    Strvalue.push(value);
+                  }
+                });
+                this.demo(key, value['labels'], Strvalue);
+              }
+
+            });
+          }
+
+        });
+      });
+
+
+
+      $.getScript('/assets/UserPanel/dist/Char.js');
+
+    }, 1000);
 
   }
   AfterViewInit() {
 
     //jQuery('head').append('<link title="HomePanel" rel="stylesheet" rel="nofollow" href="../../../assets/UserPanel/assets/css/material-dashboard.css" type="text/css" />');
+  }
+  demo(chartname, labels, series) {
+
+    new Chartist.Line('.' + chartname, {
+      labels: labels,
+      series: series
+    }, {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      });
   }
 }
 
