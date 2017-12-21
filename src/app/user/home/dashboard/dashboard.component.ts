@@ -69,11 +69,13 @@ export class DashboardComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id > 0) {
-        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data; console.log(this._PageData) });
+        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data });
+      } else {
+        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + sessionStorage.getItem('CompititorPageId') + '/?tab=dashboard').subscribe(data => { this._PageData = data; console.log(this._PageData) });
       }
     });
     this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=dashboard').subscribe(data => {
-      console.log(data);
+      
       data.forEach(element => {
         this._DashBoardArray.push(element)
         row = row + element.btstrp_size

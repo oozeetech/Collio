@@ -44,7 +44,7 @@
         </h6>
         <div id="chartTotalEarnings">
           <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-line" style="width: 100%; height: 100%;">
-           
+
             <g>
               <g class="ct-series ct-series-a">
                 <path d="M50,67.667C56.125,62,62.25,58.222,68.375,50.667C74.5,43.111,80.625,16.667,86.75,16.667C92.875,16.667,99,86.779,105.125,87C111.25,87.221,117.375,87.333,123.5,87.333C129.625,87.333,135.75,87.333,141.875,87.333C148,87.333,154.125,79.111,160.25,75"
@@ -154,9 +154,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let item of this._PageData['time_of_day_anylsis'][item.rubric_name]">
               <td>1</td>
-              <td>The best post length for you is about 80 chars</td>
+              <td>{{item}}</td>
             </tr>
           </tbody>
         </table>

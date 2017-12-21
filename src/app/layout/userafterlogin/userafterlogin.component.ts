@@ -28,6 +28,7 @@ export class UserafterloginComponent implements OnInit {
       this._CompititorPage = this._CompititorLinks.results[0]['name'];
       sessionStorage.setItem('competitors', this._CompititorPage)//session storage store for tilte in DataFile 
       this._CompititorPageId = this._CompititorLinks.results[0]['id'];
+      sessionStorage.setItem('CompititorPageId', this._CompititorPageId.toString())//session storage store for tilte in DataFile
     });
     this._MemuFlag = true;
   }
@@ -65,7 +66,7 @@ export class UserafterloginComponent implements OnInit {
   }
   ATag() {
     if (this._MemuFlag) {
-      this.router.navigateByUrl('/home/dashboard/'+this._CompititorPageId);
+      this.router.navigateByUrl('/home/dashboard/' + this._CompititorPageId);
     }
     this._MemuFlag = true;
   }
