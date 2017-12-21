@@ -1,3 +1,5 @@
 export * from './login.model'
 export * from './register.model'
 export * from './usernotification.model'
+export * from './datafile.model'
+export * from './dashboard.model'

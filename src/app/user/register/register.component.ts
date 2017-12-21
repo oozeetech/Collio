@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
       (data) => {
         sessionStorage.setItem('FaceBook', data.toString());
         this._RegistersService.RegisterWithFaceBook("rest-auth/rest-auth/facebook/", data['token'], data['uid']).subscribe(data => {
-          debugger; this.router.navigateByUrl('home'); }
+          this.router.navigateByUrl('home'); }
           , error => {  var obj = error;hElement.getElementsByTagName('p')[2].innerText = this._ErrorPassword = Object.keys(obj)[0] + " : " + obj[Object.keys(obj)[0]]; });
         //user data 
         //name, image, uid, provider, uid, email, token (accessToken for Facebook & google, no token for linkedIn), idToken(only for google) 

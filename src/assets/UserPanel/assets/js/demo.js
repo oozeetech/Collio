@@ -1,7 +1,7 @@
 type = ['','info','success','warning','danger'];
 
-
 demo = {
+
     initPickColor: function(){
         $('.pick-class-label').click(function(){
             var new_class = $(this).attr('new-class');
@@ -164,7 +164,7 @@ demo = {
     initDashboardPageCharts: function(){
 
         /* ----------==========     Daily Sales Chart initialization    ==========---------- */
-        
+
         dataDailySalesChart = {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             series: [

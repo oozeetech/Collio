@@ -1,0 +1,37 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">{{_CurrentRouting}}</h4>
+        <p class="category">Counting how many times you used each word in your posts</p>
+      </div>
+      <div class="card-content table-responsive" style="height: 500px;">
+
+        <div class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+            Select a table
+          </a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of this._TableName | sort :'name'">
+              <a href="javascript:void(0);" (click)="GetTableDataFile(item.name)">{{item.name}}</a>
+            </li>
+          </ul>
+        </div>
+        <table class="table">
+          <thead class="text-primary">
+            <th class="text-center" *ngFor="let Header of this._TableHeader">{{Header.name}}</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Body of _TableBody[0];let tr=index">
+              <td *ngFor="let TdBody of _TableBody;let i=index ">{{this._TableBody[i][tr]}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <!-- <button type="submit" class="btn btn-primary pull-left">Download File</button>
+    <button type="submit" class="btn btn-primary pull-right">Full sceen view</button> -->
+  </div>
+</div>

@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router'; //routing for page
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { UserloginComponent } from './layout';
-import { UserService, RegistersService,UserNotificationService } from './shared/service/loginapi/index'
+import { UserService, RegistersService, UserNotificationService, DataFileService,DashboardService } from './shared/service/loginapi/index'
+import { ContactUsService } from './shared/service/homeapi'
 import { ApiService, JwtService } from './shared';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,6 +16,9 @@ import { NoAuthGuard } from '../app/user/home'
 import { CommonModule } from '@angular/common'
 import { CookieService } from 'angular2-cookie/core';
 import { Angular2SocialLoginModule } from "angular2-social-login";
+import { PipeModule } from './shared/pipe/pipe.module';
+
+
 
 let providers = {
   // "google": {
@@ -40,13 +44,14 @@ let providers = {
     HttpModule,
     HttpClientModule, CommonModule,
     RouterModule.forRoot(AppRoutes),
-    Angular2SocialLoginModule
+    Angular2SocialLoginModule, PipeModule  
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, {
     provide: XSRFStrategy,
     useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
-  }, ApiService, JwtService, UserService, RegistersService, NoAuthGuard, CookieService,UserNotificationService],
+  }, ApiService, JwtService, UserService, RegistersService, NoAuthGuard, CookieService, UserNotificationService, DataFileService,ContactUsService,DashboardService],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }
 Angular2SocialLoginModule.loadProvidersScripts(providers);

@@ -1,7 +1,8 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { ChangePassWord, JwtService, UserInfo } from '../../../shared';
-import { RegistersService } from '../../../shared/service/loginapi/register.service';
+import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
+import { ChangePassWord, JwtService, UserInfo, CompititorLinks } from '../../../shared';
+import { RegistersService, UserService } from '../../../shared/service/loginapi';
 import { ActivatedRoute, Router } from '@angular/router';
+import { debuglog } from 'util';
 @Component({
   selector: 'app-usersetting',
   templateUrl: './usersetting.component.html',
@@ -12,20 +13,43 @@ export class UsersettingComponent implements OnInit {
   _UserInfo: UserInfo;
   _ChangePasswordError: string;
   _UpdateProfileError: string;
-  constructor(public _RegistersService: RegistersService, private elRef: ElementRef, public router: Router) {
+  _CompititorLinks: CompititorLinks;
+  constructor(public _RegistersService: RegistersService, private elRef: ElementRef, public router: Router, private _UserService: UserService) {
     this._ChangePassWord = new ChangePassWord();
     this._UserInfo = new UserInfo();
+    this._CompititorLinks = new CompititorLinks();
+    this._UserService.CurrentRoutingPage("UserSetting");
   }
   GetUserProfile() {
 
-    this._UserInfo.first_name = sessionStorage.getItem("first_name");
-    this._UserInfo.last_name = sessionStorage.getItem("last_name");
-    this._UserInfo.phone_number = sessionStorage.getItem("phone_number");
-    this._UserInfo.username = sessionStorage.getItem("username");
-    this._UserInfo.email_sub = (sessionStorage.getItem("email_sub") === "true");
+    this._UserInfo.first_name = sessionStorage.getItem("first_name") === null ? null : sessionStorage.getItem("first_name");
+    this._UserInfo.last_name = sessionStorage.getItem("last_name") === null ? null : sessionStorage.getItem("last_name");
+    this._UserInfo.phone_number = sessionStorage.getItem("phone_number") === null ? null : sessionStorage.getItem("phone_number");
+    this._UserInfo.username = sessionStorage.getItem("username") === null ? null : sessionStorage.getItem("username");
+    this._UserInfo.email_sub = (sessionStorage.getItem("email_sub") === "true") === null ? null : (sessionStorage.getItem("email_sub") === "true");
     this._UserInfo.access_token = sessionStorage.getItem("access_token");
     this._UserInfo.email = sessionStorage.getItem("email");
-
+    this._RegistersService.GetCompititorLinks('/page/').subscribe(data => {
+      if (data.count != 5) {
+        var Defualt = {
+          id: 0,
+          user_id: 0,
+          time_created: new Date(),
+          page_key: '',
+          name: '',
+          url: '',
+          likes: 0,
+          cover_photo_url: '',
+          profile_photo_url: '',
+          proccessing_status: false,
+          is_competitor: false,
+        }
+        for (var i = data.count; i < 5; i++) {
+          data.results.push(Defualt)
+        }
+      }
+      this._CompititorLinks = data;
+    });
   }
   ngOnInit() {
     if (sessionStorage.getItem("username") != null) {
@@ -33,7 +57,6 @@ export class UsersettingComponent implements OnInit {
     } else {
       this._UserInfo.username = ' ';
     }
-    document.getElementById("old_password").focus();
   }
   //Required funtion for UserProfile
   RequiredForUseProfile() {
@@ -153,5 +176,8 @@ export class UsersettingComponent implements OnInit {
     else {
       this._ChangePassWord = new ChangePassWord();
     }
+  }
+  ngAfterViewInit() {
+    $.getScript('/assets/UserPanel/assets/js/material-dashboard.js');
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserNotificationService } from '../../../shared/service/loginapi'
+import { UserNotificationService, UserService } from '../../../shared/service/loginapi'
 import { UserNotification } from '../../../shared/model'
 import { environment } from '../../../../environments/environment';
 @Component({
@@ -10,10 +10,10 @@ import { environment } from '../../../../environments/environment';
 export class UsernotificationComponent implements OnInit {
 
   _UserNotification: UserNotification;
-  constructor(private _UserNotificationService: UserNotificationService) {
+  constructor(private _UserNotificationService: UserNotificationService, private _UserService: UserService) {
     this._UserNotification = new UserNotification();
     this.GetNotification(`${environment.api_url}` + 'notification/?limit=10');
-
+    this._UserService.CurrentRoutingPage("Notification");
   }
   ngOnInit() {
   }
@@ -31,7 +31,6 @@ export class UsernotificationComponent implements OnInit {
     }
   }
   NotificationDelete(id) {
-
     this._UserNotificationService.DeleteNotification('notification/' + id + '/').subscribe(data => { this.GetNotification(`${environment.api_url}` + 'notification/?limit=10'); });
   }
 }

@@ -23,3 +23,24 @@ export class UserInfo {
     access_token:string;
     email_sub:boolean;
 }
+
+export class CompititorLinksResult
+{
+    id: number;
+    user_id: number;
+    time_created: Date;
+    page_key: string;
+    name: string;
+    url: string;
+    likes: number;
+    cover_photo_url: string;
+    profile_photo_url: string;
+    proccessing_status: boolean;
+    is_competitor: boolean;
+}
+export class CompititorLinks {
+    count: number;
+    next: string;
+    previous: string;
+    results: CompititorLinksResult[];
+}

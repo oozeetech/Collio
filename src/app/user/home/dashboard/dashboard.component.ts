@@ -1,19 +1,71 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import  'D:/COLLIO/COLLIO/src/assets/UserPanel/assets/js/demo.js'
-declare var demo: any;
+import { UserService, DataFileService, DashboardService } from '../../../shared/service/loginapi';
+import { DashBoardInfo } from '../../../shared'
+import { sample } from 'rxjs/operator/sample';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-    alert('adsfdsa')
+  _DashBoardArray: Array<DashBoardInfo>
+  _DashBoardInfo = [];
+  _PageData: string[] = []//dynamic model array
+  constructor(public _UserService: UserService, private _DataFileService: DataFileService, private route: ActivatedRoute, private _DashboardService: DashboardService) {
+    this._UserService.CurrentRoutingPage("DashBoard");
+    this._DashBoardArray = new Array<DashBoardInfo>();
   }
-  ngAfterViewInit() {    
-    demo.initDashboardPageCharts();
+  ngOnInit() {
+    new Chartist.Line('.ct-chart', {
+      labels: ["Sunday", "Monday", "Tuesday", "Wendsday", "Thursday", "Friday", "Saturady"],
+      series: [[
+        142,
+        193,
+        295,
+        84,
+        83,
+        83,
+        120
+      ]
+      ]
+    }, {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      });
+
+    var row = 0;
+    this.route.params.subscribe(params => {
+      const id = +params['id'];
+      if (id > 0) {
+        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data; console.log(this._PageData) });
+      }
+    });
+    this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=dashboard').subscribe(data => {
+      console.log(data);
+      data.forEach(element => {
+        this._DashBoardArray.push(element)
+        row = row + element.btstrp_size
+        if (row == 12) {
+          this._DashBoardInfo.push(this._DashBoardArray);
+          this._DashBoardArray = new Array<DashBoardInfo>();
+          row = 0;
+        }
+      });
+      $.getScript('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
+    });
+    setTimeout(() => {
+      this.AfterViewInit();
+    }, 2000);
+
+  }
+  AfterViewInit() {
+    
+    //jQuery('head').append('<link title="HomePanel" rel="stylesheet" rel="nofollow" href="../../../assets/UserPanel/assets/css/material-dashboard.css" type="text/css" />');
   }
 }
+

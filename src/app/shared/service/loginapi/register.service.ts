@@ -6,7 +6,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Subject'
-import { RegisterInfo, ChangePassWord, UserInfo } from '../../model';
+import { RegisterInfo, ChangePassWord, UserInfo, CompititorLinks } from '../../model';
 import { ApiService } from '../api.service';// It's for get set token
 import { JwtService } from '../jwt.service'; //dirstory token method
 
@@ -49,6 +49,10 @@ export class RegistersService {
   RegisterWithFaceBook(route, access_token: string, code: string): Observable<RegisterInfo> {
     let body = { access_token: access_token, code: code }
     return this.apiService.post(route, body)
+      .map(data => data);
+  }
+  GetCompititorLinks(route): Observable<CompititorLinks> {
+    return this.apiService.get(route)
       .map(data => data);
   }
 }

@@ -6,8 +6,9 @@ export const AppRoutes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'login'
+        redirectTo: 'Home'
     },
+    { loadChildren: 'app/user/landing/landing.module#LandingModule', path: 'Home', component: UserloginComponent },
     { loadChildren: 'app/user/login/login.module#LoginModule', path: 'login', component: UserloginComponent },
     { loadChildren: 'app/user/home/home.module#HomeModule', path: 'home', component: UserafterloginComponent, canActivate: [NoAuthGuard] },
     { loadChildren: 'app/user/register/register.module#RegisterModule', path: 'register', component: UserloginComponent },

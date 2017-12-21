@@ -1,4 +1,13 @@
  /* ::ng-deep.Afterlogin-body {    
     background-image: url('/assets/UserPanel/assets/img/sidebar-1.jpg');
   }   */
-  
+  .dropdown-content li{
+    list-style: none;
+    width: 100%;
+    padding: 5px;
+    
+    
+  }
+  .dropdown-content li a{
+    background-color: transparent;
+  }

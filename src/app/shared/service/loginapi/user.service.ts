@@ -19,8 +19,10 @@ export class UserService {
   public isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
+
   //constructor for create object for class then create all object for service like...
-  constructor(private apiService: ApiService, private http: Http, private jwtService: JwtService) { }
+  constructor(private apiService: ApiService, private http: Http, private jwtService: JwtService) {
+  }
 
 
   //set authentication return value for web service 
@@ -33,11 +35,11 @@ export class UserService {
 
   //attempt authentication
   attemptAuth(route: string, credentials): Observable<CommonModel> {
-         
+
     return this.apiService.post(route, credentials)
       .map(
       data => {
-        
+
         this.setAuthentication(data);
         return data;
       }
@@ -55,5 +57,11 @@ export class UserService {
   logOut(route: string): Observable<any> {
     return this.apiService.post(route)
       .map(data => { this.purgeAuth(); return data; });
+  }
+  //Comunication Two Component
+  public _RoutingActive = new Subject<string>();
+  public Routingevent = this._RoutingActive.asObservable();
+  public CurrentRoutingPage(_RoutingPageName: string) {
+    this._RoutingActive.next(_RoutingPageName);
   }
 }

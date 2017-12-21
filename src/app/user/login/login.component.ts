@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
     //page initialization code here
     ngOnInit() {
         this._EmployeeInfo = new EmployeeInfo();
-        this._EmployeeInfo.email = "";
-        this._EmployeeInfo.password = "";
+        this._EmployeeInfo.email = 'inir@gmail.com';
+        this._EmployeeInfo.password = 'static313';
         document.getElementById("email").focus();
     }
     //login button click event..
@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
             if (this._EmployeeInfo.email.length > 0 && this._EmployeeInfo.password.length > 0) {
                 this._UserService.attemptAuth("rest-auth/login/", this._EmployeeInfo).subscribe(data => {
                     this._RegistersService.GetUserDetails('rest-auth/user/').subscribe(data => {
-                        // sessionStorage.setItem("pk",data.pk.toString());
+                        
                         sessionStorage.setItem("username", (data.username) ? data.username : "");
                         sessionStorage.setItem("email", (data.email) ? data.email : "");
                         sessionStorage.setItem("first_name", (data.first_name) ? data.first_name : "");
                         sessionStorage.setItem("last_name", (data.last_name) ? data.last_name : "");
-                        //sessionStorage.setItem("id",data.id.toString());
+                        
                         sessionStorage.setItem("phone_number", (data.phone_number) ? data.phone_number : "");
                         sessionStorage.setItem("access_token", data.access_token);
                         sessionStorage.setItem("email_sub", data.email_sub == true ? "true" : "false");
