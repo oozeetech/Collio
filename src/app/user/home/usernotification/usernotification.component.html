@@ -1,0 +1,37 @@
+<div class="col-md-12">
+  <div class="card card-plain">
+    <div class="card-header" data-background-color="purple">
+      <h4 class="title">Notifications</h4>
+      <p class="category">See whats going on with your page</p>
+    </div>
+    <div class="card-content table-responsive">
+      <table class="table table-hover">
+        <tbody *ngFor="let item of this._UserNotification.results">
+          <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.text}}</td>
+            <td>{{item.time_created | date : 'MMM d, y h:mm:ss a' }}</td>
+            <td>
+              <a href="javascript:void(0);" (click)="NotificationDelete(item.id); ">
+                <i class=" fa fa-trash-o " aria-hidden="true "></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+
+            <td>
+              <button type="button " class="btn btn-primary pull-left " (click)="BtnNotification(this._UserNotification.previous)
+                    " [disabled]="!this._UserNotification.previous ">Prev</button>
+            </td>
+            <td>
+              <button type="button " class="btn btn-primary pull-right " (click)="BtnNotification(this._UserNotification.next)
+                    " [disabled]="!this._UserNotification.next ">Next</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
