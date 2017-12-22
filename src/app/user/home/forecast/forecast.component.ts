@@ -19,9 +19,14 @@ export class ForecastComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.Param(31);
+  }
+  Param(id) {
+    this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=forecast').subscribe(data => { this._PageData = data; console.log(data); this.GetData() });
+  }
+  GetData() {
     var row = 0;
-    this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=forecast').subscribe(data => {
-      console.log(data);
+    this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=forecast').subscribe(data => {      
       data.forEach(element => {
         this._DashBoardArray.push(element)
         row = row + element.btstrp_size
@@ -30,8 +35,7 @@ export class ForecastComponent implements OnInit {
           this._DashBoardArray = new Array<DashBoardInfo>();
           row = 0;
         }
-      });      
+      });
     });
   }
-
 }

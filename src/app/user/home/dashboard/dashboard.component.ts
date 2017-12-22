@@ -4,6 +4,7 @@ import { DashBoardInfo } from '../../../shared'
 import { sample } from 'rxjs/operator/sample';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { unescapeIdentifier } from '@angular/compiler';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,71 +19,24 @@ export class DashboardComponent implements OnInit {
   constructor(public _UserService: UserService, private _DataFileService: DataFileService, private route: ActivatedRoute, private _DashboardService: DashboardService) {
     this._UserService.CurrentRoutingPage("DashBoard");
     this._DashBoardArray = new Array<DashBoardInfo>();
+    this._UserService.Pageevent.subscribe(data => { this.Param(data); })
   }
 
   ngOnInit() {
-    // function makeSVGEl(tag, attrs) {
-    //   var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    //   for (var k in attrs) {
-    //     el.setAttribute(k, attrs[k]);
-    //   }
-    //   return el;
-    // }
-    // var svg = document.querySelector("svg.progress-chart");
-    // var g = makeSVGEl("g", { class: "ct-grids" });
-    // svg.appendChild(g);
-    // var dataset = [
-    //   { x: 100, y: 33 },
-    //   { x: 200, y: 133 },
-    //   { x: 300, y: 100 },
-    //   { x: 400, y: 100 },
-    //   { x: 500, y: 100 },
-    //   { x: 600, y: 100 }
-    // ];
-    // dataset.forEach(function (coords) {
-    //   g.appendChild(makeSVGEl("line", {
-    //     cx: coords.x,
-    //     cy: coords.y,
-    //     fill: "blue",
-    //     r: 4.5
-    //   }));
-    // });
-    // new Chartist.Line('.ct-chart', {
-    //   labels: ["Sunday", "Monday", "Tuesday", "Wendsday", "Thursday", "Friday", "Saturady"],
-    //   series: [[
-    //     142,
-    //     193,
-    //     295,
-    //     84,
-    //     83,
-    //     83,
-    //     120
-    //   ],[
-    //     12,
-    //     193,
-    //     25,
-    //     84,
-    //     3,
-    //     83,
-    //     120
-    //   ]
-    //   ]
-    // }, {
-    //     fullWidth: true,
-    //     chartPadding: {
-    //       right: 40
-    //     }
-    //   });
 
-    var row = 0;
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id > 0) {
-        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data; });
-      } else {
-        this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + sessionStorage.getItem('CompititorPageId') + '/?tab=dashboard').subscribe(data => { this._PageData = data; });
+        this.Param(id);
       }
     });
+  }
+  Param(id) {
+    this._DashboardService.GetTabInformation(`${environment.api_url}` + '/page/data/' + id + '/?tab=dashboard').subscribe(data => { this._PageData = data; this.GetData() });
+  }
+  //Get Data For Dynamic assign 
+  GetData() {
+    var row = 0;
     this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=dashboard').subscribe(data => {
       this._Page = data;
       data.forEach(element => {
@@ -94,53 +48,88 @@ export class DashboardComponent implements OnInit {
           row = 0;
         }
       });
-
     });
-
     setTimeout(() => {
-      Object.entries(this._PageData).forEach(([key, value]) => {
-        Object.entries(this._Page).forEach(([k, Pg]) => {
-
-          if (Pg['representation'] == 'line'|| Pg['representation'] == 'bar') {
-            Object.entries(value).forEach(([key, value]) => {
-              if (Pg['rubric_name'] == key) {
-                var Strvalue = [];
-                Object.entries(value).forEach(([key, value]) => {
-                  if (key !== 'labels') {
-                    Strvalue.push(value);
-                  }
-                });
-                this.demo(key, value['labels'], Strvalue);
-              }
-
-            });
-          }
-
+      if (this._PageData != undefined && this._Page != undefined) {
+        Object.entries(this._PageData).forEach(([key, value]) => {
+          Object.entries(this._Page).forEach(([k, Pg]) => {
+            if (Pg['representation'] == 'line' && value != undefined && value != null) {
+              Object.entries(value).forEach(([key, value]) => {
+                if (Pg['rubric_name'] == key) {
+                  var Strvalue = [];
+                  Object.entries(value).forEach(([key, value]) => {
+                    if (key !== 'labels') {
+                      Strvalue.push({
+                        data: value,
+                        label: key,
+                        borderColor: this.dynamicColors(),
+                        fill: false
+                      });
+                    }
+                  });
+                  this.Line(key, value['labels'], Strvalue);
+                }
+              });
+            }
+            else if (Pg['representation'] == 'bar' && value != undefined && value != null) {
+              Object.entries(value).forEach(([key, value]) => {
+                if (Pg['rubric_name'] == key) {
+                  var Strvalue = [];
+                  Object.entries(value).forEach(([key, value]) => {
+                    if (key !== 'labels') {
+                      Strvalue.push({
+                        label: key,
+                        backgroundColor: this.dynamicColors(),
+                        data: value,
+                      });
+                    }
+                  });
+                  this.Bar(key, value['labels'], Strvalue);
+                }
+              });
+            }
+          });
         });
-      });
-
-
-
-      $.getScript('/assets/UserPanel/dist/Char.js');
-
+      }
     }, 1000);
-
   }
-  AfterViewInit() {
-
-    //jQuery('head').append('<link title="HomePanel" rel="stylesheet" rel="nofollow" href="../../../assets/UserPanel/assets/css/material-dashboard.css" type="text/css" />');
-  }
-  demo(chartname, labels, series) {
-
-    new Chartist.Line('.' + chartname, {
-      labels: labels,
-      series: series
-    }, {
-        fullWidth: true,
-        chartPadding: {
-          right: 40
+  //Line chart funtion
+  Line(chartname, labels, series) {
+    new Chart(document.getElementById(chartname), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: series
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Adjusted likes per post type'
         }
-      });
+      }
+    });
+  }
+  //Bar Char Funtion
+  Bar(chartname, labels, series) {
+    Chart.Bar(chartname, {
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Adjusted likes per post type'
+        }
+      },
+      data: {
+        labels: labels,
+        datasets: series
+      }
+    });
+  }
+  dynamicColors() {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
   }
 }
 

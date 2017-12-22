@@ -1,9 +1,3 @@
-<div class="row">
-  <div class="col-xs-4">
-    <div class="ct-chart "></div>
-  </div>
-</div>
-
 
 <div class="row" *ngFor="let Rowitem of _DashBoardInfo">
   <div *ngFor="let item of Rowitem" class="col-lg-{{item.btstrp_size}}">
@@ -22,7 +16,7 @@
       </span>
       <div class="card-footer">
         <div class="stats">
-          <i class="material-icons">date_range</i> Last 24 Hours
+          <i class="material-icons">note</i> {{item.description}}
         </div>
       </div>
     </div>
@@ -30,7 +24,7 @@
       <div class="card-content">
         <div class="row">
           <div class="col-xs-7">
-            <div class="numbers pull-left">{{item.rubric_title}}</div>
+            <div class="numbers pull-left">{{item.current_value==false ?'' :item.current_value}}</div>
           </div>
           <div class="col-xs-5">
             <div class="pull-right">
@@ -40,21 +34,16 @@
             </div>
           </div>
         </div>
-        <h6 class="big-title" style="font-weight: 400;text-align:  center;">{{item.description}}
-
+        <h6 class="big-title" style="font-weight: 400;text-align:  center;">{{item.rubric_title}}
         </h6>
-        <div id="chartTotalEarnings">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="{{item.rubric_name}}"></div>
-            </div>
-          </div>
+
+        <div class="col-lg-12">
+          <canvas id="{{item.rubric_name}}" width="{{item.btstrp_size}}*100" height="450"></canvas>
         </div>
+
       </div>
-      <div class="card-footer">        <hr>
-        <div class="footer-title">This is where the description belongs</div>
-        <div class="pull-right">
-        </div>
+      <div class="card-footer text-center">
+        <div class="footer-title ">{{item.description}}</div>
       </div>
     </div>
     <div class="card card-product" data-count="6" *ngIf="item.representation==='post'">
@@ -118,7 +107,7 @@
       <div class="card-content">
         <div class="row">
           <div class="col-xs-7">
-            <div class="numbers pull-left">{{item.rubric_title}}</div>
+            <div class="numbers pull-left">{{item.current_value==false ?'' :item.current_value}}</div>
           </div>
           <div class="col-xs-5">
             <div class="pull-right">
@@ -128,24 +117,15 @@
             </div>
           </div>
         </div>
-        <h6 class="big-title" style="font-weight: 400;text-align:  center;">{{item.description}}
-
+        <h6 class="big-title" style="font-weight: 400;text-align:  center;">{{item.rubric_title}}
         </h6>
-        <div id="chartTotalEarnings">
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="{{item.rubric_name}}"></div>
-            </div>
-          </div>
-
+        <div class="col-lg-12">
+          <canvas id="{{item.rubric_name}}" width="{{item.btstrp_size}}*100" height="450"></canvas>
         </div>
       </div>
-      <div class="card-footer">
-        <hr>
-        <div class="footer-title">This is where the description belongs</div>
-        <div class="pull-right">
-        </div>
+      <div class="card-footer text-center" >
+        <div class="footer-title">{{item.description}}</div>
+
       </div>
     </div>
   </div>

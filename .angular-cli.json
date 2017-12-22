@@ -29,13 +29,14 @@
         "../src/assets/HomePanel/assets/js/jquery-ui-1.12.1.custom.min.js",
         "../src/assets/HomePanel/assets/js/popper.js",
         "../src/assets/UserPanel/assets/js/bootstrap.min.js",
-        "../src/assets/UserPanel/assets/js/material.min.js",    
-        "../node_modules/chart.js/src/chart.js",    
-        "../src/assets/UserPanel/assets/js/chartist.min.js",   
+        "../src/assets/UserPanel/assets/js/material.min.js",                    
         "../src/assets/HomePanel/assets/js/paper-kit.js",
         "../src/assets/UserPanel/assets/js/bootstrap-notify.js",
         "../src/assets/UserPanel/assets/js/material-dashboard.js",
-        "../src/assets/UserPanel/assets/js/demo.js"
+        "../src/assets/UserPanel/assets/js/demo.js",
+        "../src/assets/UserPanel/Chart/Chart.bundle.min.js",                
+        "../src/assets/UserPanel/Chart/utils.js"
+
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

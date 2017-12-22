@@ -27,9 +27,9 @@ export class UserafterloginComponent implements OnInit {
       this._CompititorLinks = data;
       this._CompititorPage = this._CompititorLinks.results[0]['name'];
       sessionStorage.setItem('competitors', this._CompititorPage)//session storage store for tilte in DataFile 
-      this._CompititorPageId = this._CompititorLinks.results[0]['id'];
-      sessionStorage.setItem('CompititorPageId', this._CompititorPageId.toString())//session storage store for tilte in DataFile
-    });
+      this._CompititorPageId = this._CompititorLinks.results[0]['id'];            
+      this._UserService.CurrentPage(this._CompititorPageId.toString());//User For DashBorad First Time Pass Compititor id as parameter
+    });    
     this._MemuFlag = true;
   }
 

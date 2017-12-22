@@ -23,22 +23,10 @@
           </ul>
 
         </li>
-        <li [ngClass]="_CurrentRouting==='UserSetting' ? 'active' : ''">
-          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
-            <i class="material-icons ">person</i>
-            <p>User settings </p>
-          </a>
-        </li>
         <li [ngClass]="_CurrentRouting==='forecast' ? 'active' : ''">
           <a [routerLink]="[ 'forecast'] " routerLinkActive="active ">
             <i class="material-icons ">content_paste</i>
             <p>Forecast</p>
-          </a>
-        </li>
-        <li [ngClass]="_CurrentRouting==='Person' ? 'active' : ''">
-          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
-            <i class="material-icons ">bubble_chart</i>
-            <p>Community</p>
           </a>
         </li>
         <li [ngClass]="_CurrentRouting==='DataFile' ? 'active' : ''">
@@ -47,18 +35,33 @@
             <p>Data Files</p>
           </a>
         </li>
-        <li [ngClass]="_CurrentRouting==='Person' ? 'active' : ''">
-          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
-            <i class="material-icons ">location_on</i>
-            <p>Automatic actions</p>
-          </a>
-        </li>
         <li [ngClass]="_CurrentRouting==='Notification' ? 'active' : ''">
           <a [routerLink]="[ 'usernotification'] " routerLinkActive="active ">
             <i class="material-icons text-gray ">notifications</i>
             <p>Notifications</p>
           </a>
         </li>
+        <li [ngClass]="_CurrentRouting==='UserSetting' ? 'active' : ''">
+          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
+            <i class="material-icons ">person</i>
+            <p>User settings </p>
+          </a>
+        </li>
+
+        <li [ngClass]="_CurrentRouting==='Person' ? 'active' : ''">
+          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
+            <i class="material-icons ">bubble_chart</i>
+            <p>Community</p>
+          </a>
+        </li>
+
+        <li [ngClass]="_CurrentRouting==='Person' ? 'active' : ''">
+          <a [routerLink]="[ 'usersetting'] " routerLinkActive="active ">
+            <i class="material-icons ">location_on</i>
+            <p>Automatic actions</p>
+          </a>
+        </li>
+
         <li class="active-pro ">
           <a href="javascript:void(0); " (click)="logout() ">
             <i class="material-icons ">unarchive</i>

@@ -64,4 +64,10 @@ export class UserService {
   public CurrentRoutingPage(_RoutingPageName: string) {
     this._RoutingActive.next(_RoutingPageName);
   }
+  //Comunication Two Component
+  public _PageActive = new Subject<string>();
+  public Pageevent = this._PageActive.asObservable();
+  public CurrentPage(_PageName: string) {
+    this._PageActive.next(_PageName);
+  }
 }
