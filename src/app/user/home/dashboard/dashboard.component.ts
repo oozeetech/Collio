@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit {
   Bar(chartname, labels, series) {
     Chart.Bar(chartname, {
       options: {
-        legend: { display: false },
+        legend: { display: true },
         title: {
           display: true,
           text: 'Adjusted likes per post type'
