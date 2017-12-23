@@ -46,6 +46,12 @@ export class DashboardComponent implements OnInit {
   // Get Data For Dynamic assign 
   GetData() {
     var row = 0;
+    var hElement: HTMLElement = this.elRef.nativeElement;
+    var allDivs = hElement.getElementsByClassName('PageData');
+    for (var i = 0; i < allDivs.length; i++) {
+      allDivs[i].innerHTML = '';
+    }
+
     this._DashboardService.GetTabInformation(`${environment.api_url}` + 'template/?tab=dashboard').subscribe(data => {
       this._PostData = [];
       this._Page = data;
@@ -63,57 +69,24 @@ export class DashboardComponent implements OnInit {
 
     });
     setTimeout(() => {
-      var post=[];
+
       if (this._PageData != undefined && this._Page != undefined) {
         Object.entries(this._Page).forEach(([k, Pg]) => {
           Object.entries(this._PageData['time_of_day_anylsis']).forEach(([key, value]) => {
             if (Pg['rubric_name'] == key && Pg['representation'] == 'post') {
               this._DashboardService.GetTabInformation(`${environment.api_url}` + '/post/' + value).subscribe(data => {
                 if (data != null) {
-                  // var hElement: HTMLElement = this.elRef.nativeElement;
+                  var hElement: HTMLElement = this.elRef.nativeElement;
+                  var allDivs = hElement.getElementsByClassName(Pg['rubric_name']);                  
+                  var PostData = "<div class=\"card-image\" data-header-animation=\"true\"><a href=\"#pablo\"><img class=\"img\" src=\"https://demos.creative-tim.com/material-dashboard-pro/assets/img/card-2.jpeg\"></a></div><div class=\"card-content\"><div class=\"card-actions\"><button type=\"button\" class=\"btn btn-danger btn-simple fix-broken-card\"><i class=\"material-icons\">build</i> Fix Header!</button><button type=\"button\" class=\"btn btn-default btn-simple\" rel=\"tooltip\" data-placement=\"bottom \" title=\"\" data-original-title=\"View\"><i class=\"material-icons \">art_track</i></button><button type=\"button\" class=\"btn btn-success btn-simple \" rel=\"tooltip \" data-placement=\"bottom \" title=\"\" data-original-title=\"Edit\"><i class=\"material-icons\">edit</i>/<button><button type=\"button\" class=\"btn btn-danger btn-simple \" rel=\"tooltip \" data-placement=\"bottom \" title=\"\" data-original-title=\"Remove \"><i class=\"material-icons\">close</i></button></div><h4 class=\"card-title\"><a href=\"#pablo \">"+data.text+"</a></h4><div class=\"card-description\"></div></div><div class=\"card-footer\"><div class=\"price\"><h4>" + data.shares + " Shares</h4></div><div class=\"stats pull-right\"><p class=\"category\"><i class=\"material-icons\">place</i> " + data.likes + " Likes," + data.comments['count'] + " Comments</p></div></div>";
+                  allDivs[0].innerHTML = PostData;
                   
-                  // var allDivs = hElement.getElementsByClassName(Pg['rubric_name']);
-                  
-                  // var PostData = "<div class='card-image' data-header-animation='true'><a href='#pablo'><img class='img' src='https://demos.creative-tim.com/material-dashboard-pro/assets/img/card-2.jpeg '></a></div>" +
-                  //   +"<div class='card-content'>" +
-                  //   +"<div class='card-actions'><button type='button' class='btn btn-danger btn-simple fix-broken-card '><i class='material-icons '>build</i>Fix Header!</button>" +
-                  //   +"<button type='button' class='btn btn-default btn-simple ' rel='tooltip ' data-placement='bottom ' title='' data-original-title='View'>" +
-                  //   +"<i class='material-icons '>" + 'art_track' + "</i>" +
-                  //   +"</button>" +
-                  //   +"<button type='button' class='btn btn-success btn-simple ' rel='tooltip ' data-placement='bottom ' title='' data-original-title='Edit'>" +
-                  //   +"<i class='material-icons'>" + 'edit' + "</i>" +
-                  //   +"</button>" +
-                  //   +"<button type='button' class='btn btn-danger btn-simple ' rel='tooltip ' data-placement='bottom ' title='' data-original-title='Remove '>" +
-                  //   +"<i class='material-icons'>" + 'close' + "</i>" +
-                  //   +"</button>" +
-                  //   +"</div>" +
-                  //   +"<h4 class='card-title'>" +
-                  //   +"<a href='#pablo '>" + '{{item.rubric_title}}' + "</a>" +
-                  //   +"</h4>" +
-                  //   +"<div class='card-description'>" +
-                  //   '{{item.description}}'
-                  //   + "</div>" +
-                  //   +"</div>" +
-                  //   +"<div class='card-footer'>" +
-                  //   +"<div class='price'>" +
-                  //   +"<h4> 50 Shares </h4>" +
-                  //   +"</div>" +
-                  //   +"<div class='stats pull-right'>" +
-                  //   +"<p class='category'>" +
-                  //   +"<i class='material-icons'>place </i>525 Likes, 40 Comments</p>"
-                  //   + "</div>" +
-                  //   +"</div>";
-                  //   allDivs[0].innerHTML = PostData;
-
-                  
-                  post.push(data);
                 }
               });
             }
           });
         });
-        console.log(post)
-        this._PostData = post;
+
         Object.entries(this._PageData).forEach(([key, value]) => {
           Object.entries(this._Page).forEach(([k, Pg]) => {
             if (Pg['representation'] == 'line' && value != undefined && value != null) {

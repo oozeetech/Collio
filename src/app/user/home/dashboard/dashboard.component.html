@@ -1,4 +1,4 @@
-<div class="row" *ngFor="let Rowitem of _DashBoardInfo">
+<div  class="row PageData" *ngFor="let Rowitem of _DashBoardInfo">
   <div *ngFor="let item of Rowitem">
     <div class="col-lg-{{item.btstrp_size}}" *ngIf="item.representation==='value'">
       <div class="card card-stats" *ngIf="item.representation==='value'">
@@ -50,8 +50,8 @@
       </div>
     </div>
     <div class="post col-lg-{{item.btstrp_size}}" *ngIf="item.representation==='post'">
-      <div class="card card-product" data-count="6" *ngFor="let post of this._PostData">
-        <div class="card-image" data-header-animation="true">
+      <div class="card card-product {{item.rubric_name}}" data-count="6" >
+        <!-- <div class="card-image" data-header-animation="true">
           <a href="#pablo">
             <img class="img" src="https://demos.creative-tim.com/material-dashboard-pro/assets/img/card-2.jpeg ">
           </a>
@@ -86,7 +86,7 @@
             <p class="category">
               <i class="material-icons">place</i> {{post.likes}} Likes, {{post.comments['count']}} Comments</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="col-lg-{{item.btstrp_size}}" *ngIf="item.representation==='list' && this._PageData['time_of_day_anylsis'][item.rubric_name] != null">
