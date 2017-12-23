@@ -7,6 +7,7 @@ declare var Chart: any;
 declare var init: any;
 declare var style: any;
 declare var window_width: any;
+declare var RangeSliderChart : any;
 interface NodeModule {
   id: string;
 }

@@ -21,8 +21,7 @@
       "styles": [
         "../src/assets/UserPanel/assets/css/bootstrap.min.css",
         "../src/assets/UserPanel/assets/css/material-dashboard.css",
-        "../src/assets/UserPanel/assets/css/demo.css",        
-        "../src/assets/UserPanel/Chart/dist/RangeSlider-all.min.css",
+        "../src/assets/UserPanel/assets/css/demo.css",
         "styles.css"
       ],
       "scripts": [
@@ -34,8 +33,7 @@
         "../src/assets/HomePanel/assets/js/paper-kit.js",
         "../src/assets/UserPanel/assets/js/bootstrap-notify.js",
         "../src/assets/UserPanel/assets/js/material-dashboard.js",
-        "../src/assets/UserPanel/assets/js/demo.js"
-                 
+        "../src/assets/UserPanel/assets/js/demo.js"    
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

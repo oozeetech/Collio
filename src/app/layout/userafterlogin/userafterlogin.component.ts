@@ -27,8 +27,9 @@ export class UserafterloginComponent implements OnInit {
       this._CompititorLinks = data;
       this._CompititorPage = this._CompititorLinks.results[0]['name'];
       sessionStorage.setItem('competitors', this._CompititorPage)//session storage store for tilte in DataFile 
-      this._CompititorPageId = this._CompititorLinks.results[0]['id'];            
-      this._UserService.CurrentPage(this._CompititorPageId.toString());//User For DashBorad First Time Pass Compititor id as parameter
+      this._CompititorPageId = this._CompititorLinks.results[0]['id']; 
+      this.router.navigateByUrl('/home/dashboard/' + this._CompititorPageId); //first time redirect          
+      //this._UserService.CurrentPage(this._CompititorPageId.toString());//User For DashBorad First Time Pass Compititor id as parameter
     });    
     this._MemuFlag = true;
   }
@@ -42,7 +43,7 @@ export class UserafterloginComponent implements OnInit {
     this._UserService.logOut("rest-auth/logout/").subscribe(data => { this.router.navigateByUrl('/'); });
   }
   ngAfterViewInit() {
-    $.getScript('/assets/UserPanel/assets/js/material-dashboard.js');
+    //$.getScript('/assets/UserPanel/assets/js/material-dashboard.js');
     //$.getScript('/assets/UserPanel/assets/js/demo.js', function (demo) { demo.initDashboardPageCharts(); });
   }
   ngOnDestroy() {

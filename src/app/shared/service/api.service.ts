@@ -114,7 +114,7 @@ export class ApiService {
       .catch(this.formatErrors)
       .map((res: Response) => { res.json() });
   }
-  getWithUrl(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
+  getWithUrl(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {    
     return this.http.get(`${path}`, { headers: this.setHeaders(), search: params })
       .catch(this.formatErrors)
       .map((res: Response) => res.json());
